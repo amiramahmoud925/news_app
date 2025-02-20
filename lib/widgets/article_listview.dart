@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/manager/cubit.dart';
 import 'package:news_app/manager/state.dart';
 import 'package:news_app/main.dart';
 import 'package:news_app/widgets/article_item.dart';
@@ -16,7 +17,7 @@ class _ArticleListviewState extends State<ArticleListview> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(builder: (context , state){
+    return BlocBuilder<AppCubit,AppState>(builder: (context , state){
       if(state is LoadedState)
         {
          return SliverList.builder(
@@ -31,7 +32,7 @@ class _ArticleListviewState extends State<ArticleListview> {
          return SliverToBoxAdapter(child: Text("Error ${state.errorMessage}"));
         }
       else{
-        return SliverToBoxAdapter(child: CircularProgressIndicator());
+        return SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
       }
     });
   }

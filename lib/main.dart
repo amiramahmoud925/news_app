@@ -17,9 +17,6 @@ class MyApp extends StatelessWidget {
     return  BlocProvider(
       create: (context) => AppCubit()..getNews(),
       child: MaterialApp(
-        routes: {
-          "s2" : (context) => News(),
-        },
         debugShowCheckedModeBanner: false,
         home: const HomeScreen(),
       ) ,
