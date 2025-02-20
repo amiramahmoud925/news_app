@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/model/article.dart';
-import 'package:news_app/network/api_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/manager/state.dart';
+import 'package:news_app/main.dart';
 import 'package:news_app/widgets/article_item.dart';
 
 class ArticleListview extends StatefulWidget {
@@ -12,28 +13,26 @@ class ArticleListview extends StatefulWidget {
 
 class _ArticleListviewState extends State<ArticleListview> {
 
-  List<Article>? x;
-  @override
-  void initState(){
-    getNews();        // call function
-    super.initState();
-  }
-  getNews()async{
-    ApiService apiService = ApiService();
-    x = await apiService.get();
-    setState(() {
-
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return x == null ? SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())):
-    SliverList.builder(
-      itemBuilder: (context,index){
-        return ArticleItem(article:x![index]);
-      },
-      itemCount: x!.length,
-    );
+    return BlocBuilder(builder: (context , state){
+      if(state is LoadedState)
+        {
+         return SliverList.builder(
+            itemBuilder: (context,index){
+              return ArticleItem(article: state.x[index],);
+            },
+            itemCount: state.x.length,
+          );
+        }
+      else if (state is ErrorState)
+        {
+         return SliverToBoxAdapter(child: Text("Error ${state.errorMessage}"));
+        }
+      else{
+        return SliverToBoxAdapter(child: CircularProgressIndicator());
+      }
+    });
   }
 }

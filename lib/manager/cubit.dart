@@ -1,27 +1,26 @@
-abstract class Car {
-  final String color ;
-  final String price ;
-  final String model ;
-  final int num ;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/manager/state.dart';
+import 'package:news_app/network/api_service.dart';
+import 'package:news_app/model/article.dart';
 
-  const Car({required this.color , required this.price , required this.model , required this.num });
-}
+class AppCubit extends Cubit<AppState>{
+  AppCubit():super(InitialState());
 
-class Bmw extends Car{
-  final double speed ;
-  Bmw({required this.speed , required super.color,
-       required super.price, required super.model}):super(num : 4);
+  getNews()async{
+    emit(LoadingState());
+    ApiService apiService = ApiService();
 
-}
-
-class Toytaa extends Car{
-
-  Toytaa({required super.color, required super.price,
-          required super.model }):super(num : 4);
-
-}
-
-main(){
- Bmw x = Bmw(speed: 150.0 , color: "", price: "", model: "");
- Toytaa y = Toytaa(color: "", price: "", model: "");
+    try {
+      var json = await apiService.get(endPoints:"v2/top-headlines?country=us&category=business&apiKey=cf32d7e3dad3471d9cbe9a9244124b72");
+      List<Article> articles = [];
+      for(var item in json["articles"])
+      {
+        articles.add(Article(image: item["urlToImage"],
+            name: item["title"], description: item["description"]));
+      }
+      emit(LoadedState(x: articles));
+    } on Exception catch (error) {
+      emit(ErrorState(errorMessage:error.toString()));
+    }
+  }
 }

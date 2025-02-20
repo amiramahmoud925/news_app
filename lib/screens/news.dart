@@ -14,19 +14,7 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> {
   @override
 
-  List<Article>? x;
-  @override
-  void initState(){
-    getNews();        // call function
-    super.initState();
-  }
-  getNews()async{
-    ApiService apiCategories = ApiService();
-    x = await apiCategories.get();
-    setState(() {
-
-    });
-  }
+  
   Widget build(BuildContext context) {
     Map<String,dynamic> data = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic> ;
     String name = data['category'];
@@ -42,13 +30,7 @@ class _NewsState extends State<News> {
           ),),
         ),
       ),
-      body: x == null ? Center(child: CircularProgressIndicator()):
-      ListView.builder(
-        itemBuilder: (context,index){
-          return ArticleItem(article:x![index]);
-        },
-        itemCount: x!.length,
-      ),
+
     );
   }
 }
