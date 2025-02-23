@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               ),),
             ),
           ),
-          SliverToBoxAdapter(child: ArticleListview()),
+              ArticleListview(),
         ],
       ),
     );

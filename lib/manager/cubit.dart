@@ -3,7 +3,7 @@ import 'package:news_app/manager/state.dart';
 import 'package:news_app/network/api_service.dart';
 import 'package:news_app/model/article.dart';
 
-class AppCubit extends Cubit<AppState>{
+class AppCubit extends Cubit<AppState> {
   AppCubit():super(InitialState());
 
   getNews()async{

@@ -13,14 +13,14 @@ class CategoryItem extends StatelessWidget {
         onTap: (){
            Navigator.pushNamed(context, "s2" ,
                arguments:{
-           'category' : x.name
+           'name' : x.name , 'id': x.id
            });
         },
         child: CircleAvatar(
           radius: 50,
           backgroundColor: Color(0xFF007C6A),
-          backgroundImage: AssetImage("${x.image}"),
-          child: Text("${x.name}",style: TextStyle(
+          backgroundImage: AssetImage(x.image),
+          child: Text(x.name,style: TextStyle(
               color: Colors.white,fontSize: 20),
           ),
         ),

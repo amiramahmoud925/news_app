@@ -36,7 +36,7 @@ class ArticleItem extends StatelessWidget {
             child: Text(article.description ?? "no description",
               maxLines: active ? null : 2 ,
               overflow: active ? TextOverflow.visible : TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12, color: Colors.grey
+              style: TextStyle(fontSize: 13, color: Colors.grey
               ),),
           ),
         ],
